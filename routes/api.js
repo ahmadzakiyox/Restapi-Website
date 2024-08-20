@@ -341,17 +341,16 @@ router.get('/removekey', async (req, res, next) => {
 
 router.get('/ai/gpt4', async (req, res, next) => {
     var apikeyInput = req.query.apikey,
-        text = req.query.question;
+        question = req.query.question;
 
     // Validasi input apikey dan question
     if(!apikeyInput) return res.json(loghandler.notparam)
-   	if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
-    if (!text) return res.json(loghandler.nottext)
-    
+	  if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
+    if (!question) return res.json({ status: false, message: "prompt di butuhkan" });
 
     try {
         // Menggunakan Hercai untuk mengajukan pertanyaan dengan model v3
-        const response = await herc.question({ model: "v3", content: text });
+        const response = await herc.question({ model: "v3", content: question });
         
         // Mengirimkan respon dari Hercai
         res.json({
