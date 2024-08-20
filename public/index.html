@@ -712,7 +712,7 @@
                     <div class="row">
                       <div class="col-9">
                         <div class="d-flex align-items-center align-self-start">
-                          <h3 class="mb-0" id="visits">Waiting...</h3>
+                          <h3 class="mb-0" id="visitss">Waiting...</h3>
                         </div>
                       </div>
                       <div class="col-3">
@@ -831,24 +831,6 @@
               </div>
               </div>
               <div class="col-md-6 col-xl-4 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                      <h6 class="text-center font-weight-bold">zaki Rest APIs</h6><hr color="blue">
-                     <div class="row content-justify-center">
-                       <img width="150px" height="150px" class="rounded-circle img-thumbnail" id="image" src="" alt="sad:)"><hr>
-                         <div class="col">
-                      <font size="2" face="Original Surfer" class="col mt-3 text-center text-uppercase font-weight-bold">&nbsp; &nbsp; &nbsp; &nbsp;Thanks To:<br>• Zahirr<br>• Manurios<br>• Wawan<br>• Rakha<br>• zaki Team<br> <font color="blue">Ini Tulisan Warna Biru</font></font>
-                         </div>
-                     </div><hr>
-                     <font class="font-weight-bold" face="Original Surfer">
-                     <small class="text-center">• Jika Menemukan Bug/Typo Harap Segera Lapor <a href="https://wa.me/628311800241">Disini</a></small><br>
-                     <small class="text-center">• Semua Fitur Free Gan</small><br>
-                     <small class="text-center">• Maaf Bang Pemula Masih Belajar:)</small>
-                     <small class="text-center"><br>• Apikey: <b>zaki</b></small>
-                     <small class="text-center"><br>• Costum Apikey?? <a href="https://wa.me/628311800241?text=bang+mau+costum+apikey+berapa?">Klik Disini</a></small>
-                     </font>
-                  </div>
-                </div>
               </div>
             </div>
                 </div>
@@ -889,4 +871,10 @@
     <script src="js/todolist.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/ojan.js"></script>
+    <script>
+      function cb(response) {
+          document.getElementById('visitss').innerText = response.value;
+      }
+      </script>
+      <script async src="https://api.countapi.xyz/hit/nuxysapi/visits"></script>
 </html>
