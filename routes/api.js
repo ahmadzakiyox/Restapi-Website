@@ -360,7 +360,7 @@ router.get('/ai/gpt4', async (req, res, next) => {
     } catch (error) {
         // Menangani kesalahan jika ada
         console.error(error);
-        res.json({ status: false, message: "Something went wrong", error: error.message });
+        res.json(loghandler.invalidLink)
     }
 });
 
