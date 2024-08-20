@@ -4,8 +4,6 @@ __path = process.cwd();
 var express = require('express');
 var db = require(__path + '/database/db'); // Menggunakan db.js yang sudah dibuat
 var mongoose = require('mongoose'); // Tambahkan Mongoose
-var { color } = require(__path + '/lib/color.js');
-
 // Definisikan Schema untuk API keys
 var apiKeySchema = new mongoose.Schema({
     apikey: String
@@ -44,6 +42,7 @@ var router = express.Router();
 var { tts, wait, simih, getBuffer, h2k, banner, getRandom, start, info, success, close, pickRandom } = require(__path + '/lib/functions.js');
 var { RemoveBg } = require('remove.bg');
 var { tahta } = require(__path + '/lib/tahta.js');
+var { color } = require(__path + '/lib/color.js');
 var upload = require(__path + '/lib/upload.js');
 var { createHash } = require('crypto');
 var { spawn, exec } = require('child_process');
