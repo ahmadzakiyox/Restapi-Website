@@ -345,7 +345,6 @@ router.get('/ai/gpt4', async (req, res, next) => {
 
     if(!apikeyInput) return res.json(loghandler.notparam)
   	if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
-    if (!text) return res.json(loghandler.nottext)
 
     try {
         // Menggunakan Hercai untuk mengajukan pertanyaan dengan model v3
