@@ -10,7 +10,7 @@ var apiKeySchema = new mongoose.Schema({
 });
 var ApiKey = mongoose.model('ApiKey', apiKeySchema);
 
-var creatorList = ['Zaki', 'AhmadzakiDeveloper']; // Nama Lu Ngab
+var creatorList = ['Zaki', 'Ahmadzaki']; // Nama Lu Ngab
 var creator = creatorList[Math.floor(Math.random() * creatorList.length)]; // Ini jan diubah
 var key = 'ZakiKey'; // Apikey Lu Ngab
 
@@ -356,7 +356,7 @@ router.get('/ai/gpt4', async (req, res, next) => {
         res.json({
             status: true,
             creator: `${creator}`,
-            reply: response.reply
+            result: response.reply
         });
     } catch (error) {
         // Menangani kesalahan jika ada
