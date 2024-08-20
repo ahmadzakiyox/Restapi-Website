@@ -250,7 +250,7 @@ router.get('/cekapikey', async (req, res, next) => {
         if (apikeyInput == `${key}`) { limit = '9999999999999999999' }
 
 try {
-	res.json(
+	res.json({
                status : `active`,
                 apikey : apikeyInput,
                 limit : limit
