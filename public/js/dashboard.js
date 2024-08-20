@@ -34,7 +34,7 @@ function getvisitor(){
 xhr.open("GET", "https://api.countapi.xyz/hit/ahmadzakiyox/visits");
 xhr.responseType = "json";
 xhr.onload = function() {
-    document.getElementById('visits').innerText = this.response.value;
+    document.getElementById('visitstor').innerText = this.response.value;
 }
 xhr.send();
 }
