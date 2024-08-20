@@ -358,9 +358,7 @@ router.get('/ai/gpt4', async (req, res, next) => {
             reply: response.reply
         });
     } catch (error) {
-        // Menangani kesalahan jika ada
-        console.error(error);
-        res.json(loghandler.invalidLink)
+    res.json(loghandler.invalidLink)
     }
 });
 
