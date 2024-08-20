@@ -217,7 +217,7 @@ loghandler = {
     }
 }
 
-var error = __path + '/views/error.html' // Error
+var error = __path + '/public/error.html' // Error
 var invalidKey = __path + '/views/invalidKey.html' // Apikey Invalid
 
 // Api Features :
