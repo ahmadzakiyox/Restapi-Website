@@ -349,7 +349,7 @@ router.get('/ai/gpt4', async (req, res, next) => {
 
     try {
         // Menggunakan Hercai untuk mengajukan pertanyaan dengan model v3
-        const response = await herc.question({ model: "v3", content: question });
+        const response = await herc.question({ model: "v3", content: text });
         
         // Mengirimkan respon dari Hercai
         res.json({
