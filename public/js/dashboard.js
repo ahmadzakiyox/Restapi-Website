@@ -31,14 +31,12 @@ xhr.send();
 // Visitor
 function getvisitor(){
     var xhr = new XMLHttpRequest();
-    var url = 'https://api.countapi.xyz/hit/api-fxc7.herokuapp.com/visits';
-    xhr.onloadend = function(){
-    data = JSON.parse(this.responseText);
-    document.getElementById("visits").textContent = data.value
-    };
-    xhr.open("GET", url, true);
-    xhr.send();
-    }
+xhr.open("GET", "https://api.countapi.xyz/hit/botpyz-92685f78407d.herokuapp.com/visits");
+xhr.responseType = "json";
+xhr.onload = function() {
+    document.getElementById('visits').innerText = this.response.value;
+}
+xhr.send();
 
 // User Agent
 txt = "";
