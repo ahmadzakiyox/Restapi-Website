@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Key Management</title>
+</head>
+<body>
+    <h1>API Key Management</h1>
+
+    <h2>Add API Key</h2>
+    <form id="addApikeyForm">
+        <label for="apikey">API Key:</label>
+        <input type="text" id="apikey" name="apikey" required>
+        <button type="submit">Add API Key</button>
+    </form>
+
+    <h2>Change API Key</h2>
+    <form id="changeApikeyForm">
+        <label for="oldkey">Old API Key:</label>
+        <input type="text" id="oldkey" name="oldkey" required>
+        <br>
+        <label for="newkey">New API Key:</label>
+        <input type="text" id="newkey" name="newkey" required>
+        <button type="submit">Change API Key</button>
+    </form>
+
+    <h2>Remove API Key</h2>
+    <form id="removeApikeyForm">
+        <label for="apikeyToRemove">API Key:</label>
+        <input type="text" id="apikeyToRemove" name="apikeyToRemove" required>
+        <button type="submit">Remove API Key</button>
+    </form>
+
+    <script>
+        // Fungsi untuk mengirim permintaan addapikey
+        document.getElementById('addApikeyForm').onsubmit = async function(event) {
+            event.preventDefault();
+            const apikey = document.getElementById('apikey').value;
+            const response = await fetch(`/addapikey?apikey=${apikey}`);
+            const result = await response.json();
+            alert(result.result);
+        };
+
+        // Fungsi untuk mengirim permintaan changekey
+        document.getElementById('changeApikeyForm').onsubmit = async function(event) {
+            event.preventDefault();
+            const oldkey = document.getElementById('oldkey').value;
+            const newkey = document.getElementById('newkey').value;
+            const response = await fetch(`/changekey?oldkey=${oldkey}&newkey=${newkey}`);
+            const result = await response.json();
+            alert(result.result);
+        };
+
+        // Fungsi untuk mengirim permintaan removekey
+        document.getElementById('removeApikeyForm').onsubmit = async function(event) {
+            event.preventDefault();
+            const apikey = document.getElementById('apikeyToRemove').value;
+            const response = await fetch(`/removekey?apikey=${apikey}`);
+            const result = await response.json();
+            alert(result.result);
+        };
+    </script>
+</body>
+</html>
