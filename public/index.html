@@ -858,10 +858,34 @@
     <script src="js/dashboard.js"></script>
     <script src="js/ojan.js"></script>
     <script>
-    function cb(response) {
-    document.getElementById('visits').innerText = response.value;
-    }
+      const NAMESPACE = 'Ahmadzakoyox'; // Ganti dengan namespace yang sebenarnya
+      const KEY = 'visits';
+      const UPDATE_URL = `https://api.countapi.xyz/update/${NAMESPACE}/${KEY}?amount=1`;
+      const GET_URL = `https://api.countapi.xyz/get/${NAMESPACE}/${KEY}`;
+
+      // Function to update the visitor count
+      function updateVisitorCount() {
+        fetch(UPDATE_URL)
+          .then(response => response.json())
+          .then(cb) // Call the callback function 'cb' with the response
+          .catch(error => console.error('Error:', error));
+      }
+
+      // Function to fetch the current visitor count and display it
+      function fetchCurrentCount() {
+        fetch(GET_URL)
+          .then(response => response.json())
+          .then(cb) // Call the callback function 'cb' with the response
+          .catch(error => console.error('Error:', error));
+      }
+
+      // Callback function to display the count
+      function cb(response) {
+        document.getElementById('visits').innerText = response.value;
+      }
+
+      // Call fetchCurrentCount to show the current count when the page loads
+      fetchCurrentCount();
     </script>
-    <script async src="https://api.countapi.xyz/hit/ahmadzakiyox.github.io/visits?callback=cb"></script>
       <script async src="https://api.countapi.xyz/hit/nuxysapi/visits"></script>
 </html>
