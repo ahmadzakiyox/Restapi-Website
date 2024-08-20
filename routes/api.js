@@ -241,6 +241,26 @@ var invalidKey = __path + '/views/invalidKey.html' // Apikey Invalid
         
 
 // Existing code...
+router.get('/cekapikey', async (req, res, next) => {
+    var apikeyInput = req.query.apikey;
+
+	if(!apikeyInput) return res.json(loghandler.notparam)
+	if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
+	var limit = 'undefined'
+        if (apikeyInput == `${key}`) { limit = '9999999999999999999' }
+
+try {
+	res.json({
+               status : `active`,
+                apikey : apikeyInput,
+                limit : limit
+            })
+ 
+} catch (e) {
+	res.sendFile(error)
+   }
+})
+
 // Endpoint untuk menambahkan API key baru
 router.get('/addapikey', async (req, res, next) => {
 
