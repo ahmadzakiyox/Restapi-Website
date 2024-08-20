@@ -676,68 +676,6 @@ router.get('/maker/nulis2', async (req, res, next) => {
            }
 })
 
-router.get('/ai/gpt4', async (req, res, next) => {
-	var apikeyInput = req.query.apikey,
-            text = req.query.text
-            
-	if(!apikeyInput) return res.json(loghandler.notparam)
-	if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
-        if (!text) return res.json(loghandler.nottext)
-
-   try {
-	   var d = new Date
-           var tgl = d.toLocaleDateString('id-Id')
-           var hari = d.toLocaleDateString('id-Id', { weekday: 'long' })
-	   var fontPath = __path + '/lib/font/Zahraaa.ttf'
-           var inputPath = __path + '/lib/kertas/nulis2.jpg'
-           var outputPath = __path + '/tmp/hasil2.jpg'
-      spawn('convert', [
-    inputPath,
-    '-font',
-    fontPath,
-    '-size',
-    '1024x784',
-    '-pointsize',
-    '20',
-    '-interline-spacing',
-    '1',
-    '-annotate',
-    '+806+78',
-    hari,
-    '-font',
-    fontPath,
-    '-size',
-    '1024x784',
-    '-pointsize',
-    '18',
-    '-interline-spacing',
-    '1',
-    '-annotate',
-    '+806+102',
-    tgl,
-    '-font',
-    fontPath,
-    '-size',
-    '1024x784',
-    '-pointsize',
-    '20',
-    '-interline-spacing',
-    '-7.5',
-    '-annotate',
-    '+344+142',
-    text,
-    outputPath
-  ])
-  .on('error', () => console.log('Error Nulis2'))
-  .on('exit', () => {
-
-	          res.sendFile(outputPath)
-        })
-   } catch (e) {
-      console.log(e);
-	 res.json(loghandler.erorr)
-           }
-})
 
 router.get('/textmaker', async (req, res, next) => {
         var theme = req.query.theme,
