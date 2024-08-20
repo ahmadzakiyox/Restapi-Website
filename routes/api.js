@@ -341,14 +341,16 @@ router.get('/removekey', async (req, res, next) => {
 
 router.get('/ai/gpt4', async (req, res, next) => {
     var apikeyInput = req.query.apikey,
-        text = req.query.question;
+        question = req.query.question;
 
-    if(!apikeyInput) return res.json(loghandler.notparam)
-  	if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
+    // Validasi input apikey dan question
+    if (!apikeyInput) return res.json({ status: false, message: "API key is required" });
+    if (apikeyInput !== `${key}`) return res.json({ status: false, message: "Invalid API key" });
+    if (!question) return res.json({ status: false, message: "Question is required" });
 
     try {
         // Menggunakan Hercai untuk mengajukan pertanyaan dengan model v3
-        const response = await herc.question({ model: "v3", content: text });
+        const response = await herc.question({ model: "v3", content: question });
         
         // Mengirimkan respon dari Hercai
         res.json({
@@ -357,7 +359,9 @@ router.get('/ai/gpt4', async (req, res, next) => {
             reply: response.reply
         });
     } catch (error) {
-    res.json(loghandler.invalidLink)
+        // Menangani kesalahan jika ada
+        console.error(error);
+        res.json({ status: false, message: "Something went wrong", error: error.message });
     }
 });
 
