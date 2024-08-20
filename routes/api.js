@@ -17,10 +17,9 @@ var creator = creatorList[Math.floor(Math.random() * creatorList.length)]; // In
 var key = 'ZakiKey'; // Apikey Lu Ngab
 
 // Required Modules :
-var ffmpeg = require('fluent-ffmpeg');
-var brainly = require('brainly-scraper-v2');
-var imageToBase64 = require('image-to-base64');
-var upload = require(__path + '/lib/upload.js');
+const ffmpeg = require('fluent-ffmpeg');
+const brainly = require('brainly-scraper-v2');
+const imageToBase64 = require('image-to-base64');
 const axios = require('axios');
 const FormData = require('form-data');
 const ytdl = require('ytdl-core');
@@ -38,13 +37,14 @@ const yts = require('yt-search');
 const fs = require('fs');
 const util = require('util');
 const { Hercai } = require('hercai');
-
 const herc = new Hercai(); //new Hercai("your api key"); => Optional
+
 var router = express.Router();
 
 var { tts, wait, simih, getBuffer, h2k, banner, getRandom, start, info, success, close, pickRandom } = require(__path + '/lib/functions.js');
 var { RemoveBg } = require('remove.bg');
 var { tahta } = require(__path + '/lib/tahta.js');
+var upload = require(__path + '/lib/upload.js');
 var { createHash } = require('crypto');
 var { spawn, exec } = require('child_process');
 var { fetchJson } = require(__path + '/lib/fetcher.js');
