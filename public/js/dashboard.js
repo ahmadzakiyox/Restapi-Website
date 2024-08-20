@@ -31,12 +31,13 @@ xhr.send();
 // Visitor
 function getvisitor(){
     var xhr = new XMLHttpRequest();
-xhr.open("GET", "https://api.countapi.xyz/hit/botpyz-92685f78407d.herokuapp.com/visits");
+xhr.open("GET", "https://api.countapi.xyz/hit/ahmadzakiyox/visits");
 xhr.responseType = "json";
 xhr.onload = function() {
     document.getElementById('visits').innerText = this.response.value;
 }
 xhr.send();
+}
 
 // User Agent
 txt = "";
