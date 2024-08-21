@@ -460,7 +460,7 @@ router.get('/download/savefrom', async (req, res, next) => {
              res.json({
                  status: true,
                  creator: `${creator}`,
-                 videoNoWm: vid
+                 url: vid
              })
          })
          .catch(e => {
