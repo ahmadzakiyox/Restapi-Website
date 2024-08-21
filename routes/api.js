@@ -508,7 +508,7 @@ router.get('/carbon', async (req, res) => {
     
     ctx.reply(`Halo ${username}! Nama saya ${botname}. Saya adalah BOT Sale Telegram! Klik /menu untuk mengetahui lebih lanjut tentang cara menggunakan bot ini.\n\nKirim perintah /privacy untuk melihat syarat dan ketentuan penggunaan bot.`);
 });`;
-    const output = req.query.output;
+    const output = './carbon.png';
     const options = {
       lang: req.query.lang || 'auto',
       theme: req.query.theme || 'dracula',
