@@ -366,7 +366,7 @@ router.get('/ai/gpt4', async (req, res, next) => {
     }
 });
 
-router.get('/ai/gpt3.5-turbo', async (req, res, next) => {
+router.get('/ai/gpt3.5', async (req, res, next) => {
     var apikeyInput = req.query.apikey,
         question = req.query.question;
 
