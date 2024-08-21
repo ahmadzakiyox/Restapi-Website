@@ -496,7 +496,7 @@ router.get('/wanted', async (req, res) => {
 
 router.get('/carbon', async (req, res) => {
   try {
-    const code = `print(HelloWorld)`;
+    const code = 'print(HelloWorld)';
     const output = './carbon.png';
     const options = {
       lang: req.query.lang || 'auto',
