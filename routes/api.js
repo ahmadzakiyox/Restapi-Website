@@ -18,6 +18,7 @@ var key = 'ZakiKey'; // Apikey Lu Ngab
 const ffmpeg = require('fluent-ffmpeg');
 const brainly = require('brainly-scraper-v2');
 const imageToBase64 = require('image-to-base64');
+const { createCanvas, loadImage } = require('canvas');
 const axios = require('axios');
 const FormData = require('form-data');
 const ytdl = require('ytdl-core');
@@ -338,6 +339,40 @@ router.get('/removekey', async (req, res, next) => {
         console.log(e);
         res.sendFile(error);
     }
+});
+
+router.get('/saygoodbye', async (req, res) => {
+
+    // Set ukuran kanvas
+
+    const width = 800;
+    const height = 400;
+    const canvas = createCanvas(width, height);
+    const ctx = canvas.getContext('2d');
+
+    // Background
+    ctx.fillStyle = '#7289DA'; // Warna latar belakang
+    ctx.fillRect(0, 0, width, height);
+
+    // Tambahkan teks "Goodbye"
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 50px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Goodbye, Discord Group!', width / 2, height / 2 - 20);
+
+    // Tambahkan teks nama user (contoh "Ahmad Zaki")
+    ctx.font = 'bold 40px sans-serif';
+    ctx.fillText('Ahmad Zaki', width / 2, height / 2 + 40);
+
+    // Tambahkan logo Discord atau gambar lain
+    const imageUrl = 'https://seeklogo.com/images/D/discord-logo-134E148657-seeklogo.com.png'; // URL logo Discord
+    const img = await loadImage(imageUrl);
+    ctx.drawImage(img, width / 2 - 50, height / 2 + 60, 100, 100);
+
+    // Mengembalikan gambar sebagai response
+    const buffer = canvas.toBuffer('image/png');
+    res.set('Content-Type', 'image/png');
+    res.send(buffer);
 });
 
 //=======ARTIFICIAL INTELEGENT=======//
