@@ -445,7 +445,7 @@ router.get('/ai/gemini', async (req, res, next) => {
     }
 });
 
-app.get('/download/savefrom', async (req, res) => {
+router.get('/download/savefrom', async (req, res) => {
     const apikeyInput = req.query.apikey;
     const url = req.query.url;
 
