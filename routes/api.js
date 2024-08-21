@@ -19,7 +19,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const brainly = require('brainly-scraper-v2');
 const imageToBase64 = require('image-to-base64');
 const { createCanvas, loadImage } = require('canvas');
-const carbonn = require('carbon-now-scraper');
+const carbon = require('carbon-now-scraper');
 const axios = require('axios');
 const FormData = require('form-data');
 const ytdl = require('ytdl-core');
@@ -512,7 +512,7 @@ router.get('/carbon', async (req, res) => {
     console.log('Code:', code);
     console.log('Options:', options);
 
-    const imageBuffer = await carbonn(code, options);
+    const imageBuffer = await carbon(code, options);
 
     console.log('Image buffer:', imageBuffer);
 
