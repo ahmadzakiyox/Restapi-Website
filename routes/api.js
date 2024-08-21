@@ -459,6 +459,40 @@ router.get('/goodbye', async (req, res) => {
     canvas.createPNGStream().pipe(res);
 });
 
+router.get('/wanted', async (req, res) => {
+    const width = 2480;  // Lebar gambar sesuai dengan template A3 300 DPI
+    const height = 3508; // Tinggi gambar sesuai dengan template A3 300 DPI
+    const canvas = createCanvas(width, height);
+    const ctx = canvas.getContext('2d');
+
+    // Memuat template gambar
+    const template = await loadImage('https://telegra.ph/file/b12cd4e81865f32247140.jpg'); // Ganti dengan path yang sesuai
+    ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+
+    // Memuat foto profil yang akan ditempatkan di poster
+    const profileImage = await loadImage('https://telegra.ph/file/a89861df69e7411df644b.jpg'); // Ganti dengan path yang sesuai
+    const profileWidth = 1580; // Lebar foto yang disesuaikan
+    const profileHeight = 1235; // Tinggi foto yang disesuaikan
+    const profileX = 450; // Posisi X untuk menempatkan foto
+    const profileY = 650; // Posisi Y untuk menempatkan foto
+
+    // Menggambar gambar profil ke dalam poster
+    ctx.drawImage(profileImage, profileX, profileY, profileWidth, profileHeight);
+
+    // Menambahkan nama pengguna
+    ctx.font = 'bold 150px Georgia'; // Font dan ukuran font yang disesuaikan
+    ctx.fillStyle = '#3B2D1F'; // Warna teks mirip dengan warna teks pada template
+    ctx.textAlign = 'center';
+    ctx.fillText('Ahmad Zaki', canvas.width / 2, 2900); // Teks nama pada posisi yang tepat
+
+    // Menambahkan nilai bounty
+    ctx.font = 'bold 180px Georgia'; // Ukuran font disesuaikan
+    ctx.fillText('500,000,000', canvas.width / 2, 3200); // Teks bounty pada posisi yang tepat
+
+    res.setHeader('Content-Type', 'image/png');
+    canvas.createPNGStream().pipe(res);
+});
+
 //=======ARTIFICIAL INTELEGENT=======//
 router.get('/ai/gpt4', async (req, res, next) => {
     var apikeyInput = req.query.apikey,
