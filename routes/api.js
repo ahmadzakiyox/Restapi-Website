@@ -445,29 +445,37 @@ router.get('/ai/gemini', async (req, res, next) => {
     }
 });
 
-router.get('/download/savefrom', async (req, res, next) => {
-    var apikeyInput = req.query.apikey,
-        url = req.query.url
+app.get('/download/savefrom', async (req, res) => {
+    const apikeyInput = req.query.apikey;
+    const url = req.query.url;
 
+    if (!apikeyInput) return res.json(loghandler.notparam);
+    if (apikeyInput !== key) return res.json({ status: false, message: 'Invalid API key' });
+    if (!url) return res.json(loghandler.noturl);
 
-	if(!apikeyInput) return res.json(loghandler.notparam)
-	if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
-     if (!url) return res.json(loghandler.noturl)
-
-     bch.savefrom(url)
-         .then(vid => {
-             console.log(vid)
-             res.json({
-                 status: true,
-                 creator: `${creator}`,
-                 url: vid.url,
-                 thumb: vid.thumb
-             })
-         })
-         .catch(e => {
-             res.json(loghandler.invalidLink)
-         })
-})
+    try {
+        const vid = await bch.savefrom(url);
+        
+        // Menyusun response agar lebih jelas dan terstruktur
+        res.json({
+            status: true,
+            creator,
+            url: vid.url.map(link => ({
+                quality: link.quality, // Tampilkan kualitas video
+                link: link.url         // Tampilkan URL video
+            })),
+            thumb: vid.thumb,
+            sd: vid.sd,
+            meta: vid.meta,
+            video_quality: vid.video_quality,
+            hosting: vid.hosting,
+            hd: vid.hd
+        });
+    } catch (error) {
+        console.error('Error fetching video:', error);
+        res.json(loghandler.invalidLink);
+    }
+});
 
 router.get('/tiktod/stalk', async (req, res, next) => {
     var apikeyInput = req.query.apikey,
