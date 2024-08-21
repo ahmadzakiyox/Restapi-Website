@@ -504,7 +504,7 @@ router.get('/carbon', async (req, res) => {
                    console.log("Hello, world!");}`,
             theme: 'seti', // Tema yang ingin digunakan
             window: { width: 1200, height: 800 }, // Ukuran jendela untuk screenshot
-            format: 'png' // Format output
+            output: './carbon.png' // Format output
             };
        // Mengambil gambar dari carbon-now
        const imageBuffer = await carbon.getImage(options);
