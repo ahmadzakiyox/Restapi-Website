@@ -454,29 +454,36 @@ router.get('/download/savefrom', async (req, res) => {
     if (!url) return res.json(loghandler.noturl);
 
     try {
-        const vid = await bch.savefrom(url);
-        
+        const dataArray = await bch.savefrom(url);
+
+        // Mengambil elemen pertama dari array jika dataArray bukan kosong
+        const vid = dataArray[0] || {};
+
+        // Memastikan vid.url adalah array, jika tidak, inisialisasi sebagai array kosong
+        const videoUrls = Array.isArray(vid.url) ? vid.url.map(link => ({
+            quality: link.quality, // Tampilkan kualitas video
+            link: link.url         // Tampilkan URL video
+        })) : [];
+
         // Menyusun response agar lebih jelas dan terstruktur
-        res.json({
+        const result = {
             status: true,
             creator,
-            url: vid.url.map(link => ({
-                quality: link.quality, // Tampilkan kualitas video
-                link: link.url         // Tampilkan URL video
-            })),
+            url: videoUrls,
             thumb: vid.thumb,
             sd: vid.sd,
             meta: vid.meta,
             video_quality: vid.video_quality,
             hosting: vid.hosting,
             hd: vid.hd
-        });
+        };
+
+        res.json(result);
     } catch (error) {
         console.error('Error fetching video:', error);
         res.json(loghandler.invalidLink);
     }
 });
-
 
 router.get('/tiktod/stalk', async (req, res, next) => {
     var apikeyInput = req.query.apikey,
