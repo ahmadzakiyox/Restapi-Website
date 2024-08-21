@@ -451,7 +451,7 @@ router.get('/download/savefrom', async (req, res) => {
 
     if (!apikeyInput) return res.json(loghandler.notparam);
     if (apikeyInput !== key) return res.json({ status: false, message: 'Invalid API key' });
-    if (!url) return res.json({ status: false, message: "Url tidak valid" });
+    if (!url) return res.json(loghandler.noturl);
 
     try {
         const vid = await bch.savefrom(url);
@@ -476,6 +476,7 @@ router.get('/download/savefrom', async (req, res) => {
         res.json(loghandler.invalidLink);
     }
 });
+
 
 router.get('/tiktod/stalk', async (req, res, next) => {
     var apikeyInput = req.query.apikey,
