@@ -31,6 +31,7 @@ const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const request = require('request');
 const TikTokScraper = require('tiktok-scraper');
+const bch = require("@bochilteam/scraper")
 const yts = require('yt-search');
 const fs = require('fs');
 const util = require('util');
@@ -444,7 +445,7 @@ router.get('/ai/gemini', async (req, res, next) => {
     }
 });
 
-router.get('/tiktod', async (req, res, next) => {
+router.get('/download/savefrom', async (req, res, next) => {
     var apikeyInput = req.query.apikey,
         url = req.query.url
 
@@ -453,7 +454,7 @@ router.get('/tiktod', async (req, res, next) => {
 	if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
      if (!url) return res.json(loghandler.noturl)
 
-     TikTokScraper.getVideoMeta(url, options)
+     bch.(url, options)
          .then(vid => {
              console.log(vid)
              res.json({
