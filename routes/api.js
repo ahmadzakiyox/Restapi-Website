@@ -454,7 +454,7 @@ router.get('/download/savefrom', async (req, res, next) => {
 	if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
      if (!url) return res.json(loghandler.noturl)
 
-     bch.(url, options)
+     bch.savefrom(url, options)
          .then(vid => {
              console.log(vid)
              res.json({
