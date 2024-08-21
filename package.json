@@ -61,6 +61,7 @@
     "ytpl": "^2.0.5",
     "hercai": "^12.3.2",
     "canvas": "^2.11.2",
+    "carbon-now-scraper": "^1.0.1",
     "@bochilteam/scraper": "^5.0.1",
     "mongoose": "^8.3.1"
   },
