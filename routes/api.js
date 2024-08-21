@@ -339,6 +339,110 @@ router.get('/removekey', async (req, res, next) => {
     }
 });
 
+//=======ARTIFICIAL INTELEGENT=======//
+router.get('/ai/gpt4', async (req, res, next) => {
+    var apikeyInput = req.query.apikey,
+        question = req.query.question;
+
+    // Validasi input apikey dan question
+    if(!apikeyInput) return res.json(loghandler.notparam)
+	  if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
+    if (!question) return res.json({ status: false, message: "prompt di butuhkan" });
+
+    try {
+        // Menggunakan Hercai untuk mengajukan pertanyaan dengan model v3
+        const response = await herc.question({ model: "v3", content: question });
+        
+        // Mengirimkan respon dari Hercai
+        res.json({
+            status: true,
+            creator: `${creator}`,
+            result: response.reply
+        });
+    } catch (error) {
+        // Menangani kesalahan jika ada
+        console.error(error);
+        res.json(loghandler.erorr)
+    }
+});
+
+router.get('/ai/gpt3.5-turbo', async (req, res, next) => {
+    var apikeyInput = req.query.apikey,
+        question = req.query.question;
+
+    // Validasi input apikey dan question
+    if(!apikeyInput) return res.json(loghandler.notparam)
+	  if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
+    if (!question) return res.json({ status: false, message: "prompt di butuhkan" });
+
+    try {
+        // Menggunakan Hercai untuk mengajukan pertanyaan dengan model v3
+        const response = await herc.question({ model: "turbo", content: question });
+        
+        // Mengirimkan respon dari Hercai
+        res.json({
+            status: true,
+            creator: `${creator}`,
+            result: response.reply
+        });
+    } catch (error) {
+        // Menangani kesalahan jika ada
+        console.error(error);
+        res.json(loghandler.erorr)
+    }
+});
+
+router.get('/ai/gpt4', async (req, res, next) => {
+    var apikeyInput = req.query.apikey,
+        question = req.query.question;
+
+    // Validasi input apikey dan question
+    if(!apikeyInput) return res.json(loghandler.notparam)
+	  if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
+    if (!question) return res.json({ status: false, message: "prompt di butuhkan" });
+
+    try {
+        // Menggunakan Hercai untuk mengajukan pertanyaan dengan model v3
+        const response = await herc.question({ model: "v3", content: question });
+        
+        // Mengirimkan respon dari Hercai
+        res.json({
+            status: true,
+            creator: `${creator}`,
+            result: response.reply
+        });
+    } catch (error) {
+        // Menangani kesalahan jika ada
+        console.error(error);
+        res.json(loghandler.erorr)
+    }
+});
+
+router.get('/ai/gpt4', async (req, res, next) => {
+    var apikeyInput = req.query.apikey,
+        question = req.query.question;
+
+    // Validasi input apikey dan question
+    if(!apikeyInput) return res.json(loghandler.notparam)
+	  if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
+    if (!question) return res.json({ status: false, message: "prompt di butuhkan" });
+
+    try {
+        // Menggunakan Hercai untuk mengajukan pertanyaan dengan model v3
+        const response = await herc.question({ model: "v3", content: question });
+        
+        // Mengirimkan respon dari Hercai
+        res.json({
+            status: true,
+            creator: `${creator}`,
+            result: response.reply
+        });
+    } catch (error) {
+        // Menangani kesalahan jika ada
+        console.error(error);
+        res.json(loghandler.erorr)
+    }
+});
 router.get('/ai/gpt4', async (req, res, next) => {
     var apikeyInput = req.query.apikey,
         question = req.query.question;
