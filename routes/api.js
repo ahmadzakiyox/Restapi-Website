@@ -496,30 +496,26 @@ router.get('/wanted', async (req, res) => {
 
 router.get('/carbon', async (req, res) => {
   try {
-    const code = 'print(\'HelloWorld\')';
+    const code = `<?php
+        echo "Hi There!";
+    ?>`;
     const options = {
-      lang: 'auto',
-      theme: 'dracula',
-      background: 'rgba(171, 184, 195, 1)',
-      font: 'Hack',
-      windowControls: true,
-      widthAdjustment: true,
-      line: true,
-      firstLine: 0,
-      watermark: true
+      lang: 'php',
+      theme: 'a11y-dark'
     };
 
     console.log('Code:', code);
     console.log('Options:', options);
 
+    console.log('Calling carbon...');
     const imageBuffer = await carbon(code, options);
+    console.log('carbon returned:', imageBuffer);
 
-    console.log('Image buffer:', imageBuffer);
-
+    console.log('Sending response...');
     res.set('Content-Type', 'image/png');
     res.send(imageBuffer);
   } catch (error) {
-    console.error(error);
+    console.error('Error occurred:', error);
     res.status(500).send('An error occurred while generating the carbon image.');
   }
 });
