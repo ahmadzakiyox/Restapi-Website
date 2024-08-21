@@ -482,6 +482,80 @@ router.get('/download/savefrom', async (req, res) => {
     }
 });
 
+router.get('/download/yt', async (req, res) => {
+    const apikeyInput = req.query.apikey;
+    const url = req.query.url;
+
+    if (!apikeyInput) return res.json(loghandler.notparam);
+    if (apikeyInput !== key) return res.json({ status: false, message: 'Invalid API key' });
+    if (!url) return res.json(loghandler.noturl);
+
+    try {
+        const dataArray = await bch.savefrom(url);
+
+        // Mengambil elemen pertama dari array jika dataArray bukan kosong
+        const vid = dataArray[0] || {};
+
+        // Memastikan vid.url adalah array, jika tidak, inisialisasi sebagai array kosong
+        const videoUrl = Array.isArray(vid.url) && vid.url.length > 0 ? vid.url[0].url : 'No video URL available';
+
+        // Menyusun response agar lebih jelas dan terstruktur
+        const result = {
+            status: true,
+            creator,
+            url: videoUrl,
+            thumb: vid.thumb,
+            sd: vid.sd,
+            meta: vid.meta,
+            video_quality: vid.video_quality,
+            hosting: vid.hosting,
+            hd: vid.hd
+        };
+
+        res.json(result);
+    } catch (error) {
+        console.error('Error fetching video:', error);
+        res.json(loghandler.invalidLink);
+    }
+});
+
+router.get('/download/tiktok', async (req, res) => {
+    const apikeyInput = req.query.apikey;
+    const url = req.query.url;
+
+    if (!apikeyInput) return res.json(loghandler.notparam);
+    if (apikeyInput !== key) return res.json({ status: false, message: 'Invalid API key' });
+    if (!url) return res.json(loghandler.noturl);
+
+    try {
+        const dataArray = await bch.savefrom(url);
+
+        // Mengambil elemen pertama dari array jika dataArray bukan kosong
+        const vid = dataArray[0] || {};
+
+        // Memastikan vid.url adalah array, jika tidak, inisialisasi sebagai array kosong
+        const videoUrl = Array.isArray(vid.url) && vid.url.length > 0 ? vid.url[0].url : 'No video URL available';
+
+        // Menyusun response agar lebih jelas dan terstruktur
+        const result = {
+            status: true,
+            creator,
+            url: videoUrl,
+            thumb: vid.thumb,
+            sd: vid.sd,
+            meta: vid.meta,
+            video_quality: vid.video_quality,
+            hosting: vid.hosting,
+            hd: vid.hd
+        };
+
+        res.json(result);
+    } catch (error) {
+        console.error('Error fetching video:', error);
+        res.json(loghandler.invalidLink);
+    }
+});
+
 router.get('/tiktod/stalk', async (req, res, next) => {
     var apikeyInput = req.query.apikey,
         username = req.query.username
