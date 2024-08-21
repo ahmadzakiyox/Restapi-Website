@@ -451,7 +451,7 @@ router.get('/download/savefrom', async (req, res) => {
 
     if (!apikeyInput) return res.json(loghandler.notparam);
     if (apikeyInput !== key) return res.json({ status: false, message: 'Invalid API key' });
-    if (!url) return res.json(loghandler.noturl);
+    if (!url) return res.json({ status: false, message: "Url tidak valid" });
 
     try {
         const vid = await bch.savefrom(url);
