@@ -352,6 +352,7 @@ router.get('/saygoodbye', async (req, res) => {
     const url = req.query.url;
     const text = req.query.text;
     const text2 = req.query.text
+    const text3 = req.query.text
     
     if(!apikeyInput) return res.json(loghandler.notparam)
 	  if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
