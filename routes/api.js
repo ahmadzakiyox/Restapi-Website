@@ -496,18 +496,7 @@ router.get('/wanted', async (req, res) => {
 
 router.get('/carbon', async (req, res) => {
   try {
-    const code = `bot.command('start', (ctx) => {
-    const username = ctx.message.from.username;
-    const userId = ctx.from.id;
-    saveUser(userId);
-    let user = User.findOne({ userId });
-    if (!user) {
-      user = new User({ userId });
-      user.save();
-    }
-    
-    ctx.reply(`Halo ${username}! Nama saya ${botname}. Saya adalah BOT Sale Telegram! Klik /menu untuk mengetahui lebih lanjut tentang cara menggunakan bot ini.\n\nKirim perintah /privacy untuk melihat syarat dan ketentuan penggunaan bot.`);
-});`;
+    const code = `print(HelloWorld)`;
     const output = './carbon.png';
     const options = {
       lang: req.query.lang || 'auto',
