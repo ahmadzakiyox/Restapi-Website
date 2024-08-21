@@ -357,7 +357,7 @@ router.get('/saygoodbye', async (req, res) => {
     ctx.fillRect(0, 0, width, height);
 
     // Load gambar profile
-    const profileImagePath = path.join(__dirname, 'profile_image.png');
+    const profileImagePath = path.join(__dirname, 'https://telegra.ph/file/939769849b2ac10119575.jpg');
     const image = await loadImage(profileImagePath);
 
     // Profile Picture
