@@ -510,7 +510,7 @@ router.get('/carbon', async (req, res) => {
       watermark: typeof req.query.watermark !== 'undefined' ? req.query.watermark === 'true' : true
     };
 
-    const imageBuffer = await carbonNowScraper(code, options);
+    const imageBuffer = await carbonn(code, options);
 
     const outputPath = path.join(__dirname, '..', 'public', output);
     fs.writeFileSync(outputPath, imageBuffer);
