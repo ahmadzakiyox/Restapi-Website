@@ -495,27 +495,46 @@ router.get('/wanted', async (req, res) => {
 });
 
 router.get('/carbon', async (req, res) => {
-    try {
-        const carbon = new carbonn();
-        
-        // Konfigurasi untuk carbon-now-scraper
-       const options = {
-            code: `function helloWorld() {
-                   console.log("Hello, world!");}`,
-            theme: 'seti', // Tema yang ingin digunakan
-            window: { width: 1200, height: 800 }, // Ukuran jendela untuk screenshot
-            output: './carbon.png' // Format output
-            };
-       // Mengambil gambar dari carbon-now
-       const imageBuffer = await carbon.getImage(options);
+  try {
+    const code = `bot.command('start', (ctx) => {
+    const username = ctx.message.from.username;
+    const userId = ctx.from.id;
+    saveUser(userId);
+    let user = User.findOne({ userId });
+    if (!user) {
+      user = new User({ userId });
+      user.save();
+    }
+    
+    ctx.reply(`Halo ${username}! Nama saya ${botname}. Saya adalah BOT Sale Telegram! Klik /menu untuk mengetahui lebih lanjut tentang cara menggunakan bot ini.\n\nKirim perintah /privacy untuk melihat syarat dan ketentuan penggunaan bot.`);
+});`;
+    const output = req.query.output;
+    const options = {
+      lang: req.query.lang || 'auto',
+      theme: req.query.theme || 'dracula',
+      background: req.query.background || 'rgba(171, 184, 195, 1)',
+      font: req.query.font || 'Hack',
+      'window-controls': typeof req.query['window-controls'] !== 'undefined' ? req.query['window-controls'] === 'true' : true,
+      'width-adjustment': typeof req.query['width-adjustment'] !== 'undefined' ? req.query['width-adjustment'] === 'true' : true,
+      line: typeof req.query.line !== 'undefined' ? req.query.line === 'true' : true,
+      'first-line': typeof req.query['first-line'] !== 'undefined' ? parseInt(req.query['first-line']) : 0,
+      watermark: typeof req.query.watermark !== 'undefined' ? req.query.watermark === 'true' : true
+    };
 
-       // Mengirimkan gambar sebagai respons
-       res.setHeader('Content-Type', 'image/png');
-       res.send(imageBuffer);
-   } catch (error) {
-       console.error(error);
-       res.status(500).send('Error generating image');
-   }
+    const imageBuffer = await carbonNowScraper(code, options);
+
+    if (output) {
+      const outputPath = path.join(__dirname, '..', 'public', output);
+      fs.writeFileSync(outputPath, imageBuffer);
+      res.send(`Image saved to ${output}`);
+    } else {
+      res.set('Content-Type', 'image/png');
+      res.send(imageBuffer);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while generating the carbon image.');
+  }
 });
 
 //=======ARTIFICIAL INTELEGENT=======//
