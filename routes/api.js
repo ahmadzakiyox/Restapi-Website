@@ -403,7 +403,7 @@ router.get('/welcome', async (req, res) => {
     canvas.createPNGStream().pipe(res);
 });
 
-router.get('/saygoodbye', async (req, res) => {
+router.get('/goodbye', async (req, res) => {
     const apikeyInput = req.query.apikey;
     const url = req.query.url;
     const text = req.query.text;
