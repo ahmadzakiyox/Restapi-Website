@@ -342,54 +342,37 @@ router.get('/removekey', async (req, res, next) => {
 });
 
 router.get('/saygoodbye', async (req, res) => {
-  try {
-    // Mengatur ukuran canvas
-    const width = 1024;
-    const height = 400;
-    const canvas = createCanvas(width, height);
+    const canvas = createCanvas(800, 400); // Ukuran canvas 800x400
     const ctx = canvas.getContext('2d');
 
-    // Background Gradient
-    const gradient = ctx.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, '#FF914D'); // Warna gradasi kiri
-    gradient.addColorStop(1, '#FF1A44'); // Warna gradasi kanan
+    // Mengisi background dengan warna gradasi
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, '#1e3c72');
+    gradient.addColorStop(1, '#2a5298');
     ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Load gambar profile
-    const profileImagePath = 'https://telegra.ph/file/939769849b2ac10119575.jpg'
-    const image = await loadImage(profileImagePath);
-
-    // Profile Picture
+    // Menambahkan gambar profil (ikon Discord)
+    const profileImage = await loadImage('https://telegra.ph/file/939769849b2ac10119575.jpg'); // Ganti dengan URL gambar profil Anda
     const profileSize = 150;
-    ctx.drawImage(image, 50, 50, profileSize, profileSize);
+    ctx.drawImage(profileImage, (canvas.width - profileSize) / 2, 40, profileSize, profileSize);
 
-    // User Info
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 50px Arial';
-    ctx.fillText('Username', 250, 100); // Ganti 'Username' dengan nama user
+    // Menambahkan nama pengguna
+    ctx.font = 'bold 40px Sans-serif';
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.fillText('Zero Two', canvas.width / 2, 240);
 
-    // Rank & Order
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 40px Arial';
-    ctx.fillText('#000', 900, 50); // Ganti '#000' dengan urutan user
+    // Menambahkan deskripsi atau pesan
+    ctx.font = '30px Sans-serif';
+    ctx.fillText('Welcome To Pop Cat Community', canvas.width / 2, 290);
 
-    // Say Goodbye Text
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 60px Arial';
-    ctx.fillText('Say Goodbye', 250, 300);
+    // Menambahkan urutan atau nomor anggota
+    ctx.font = 'bold 25px Sans-serif';
+    ctx.fillText('Member 219', canvas.width / 2, 330);
 
-    // Mengubah canvas menjadi buffer
-    const buffer = canvas.toBuffer('image/png');
-
-    // Mengirim buffer sebagai response gambar
-    res.set('Content-Type', 'image/png');
-    res.send(buffer);
-
-  } catch (error) {
-    console.error('Error generating image:', error);
-    res.status(500).json({ status: false, message: 'Internal Server Error' });
-  }
+    res.setHeader('Content-Type', 'image/png');
+    canvas.createPNGStream().pipe(res);
 });
 
 //=======ARTIFICIAL INTELEGENT=======//
