@@ -460,7 +460,8 @@ router.get('/download/savefrom', async (req, res, next) => {
              res.json({
                  status: true,
                  creator: `${creator}`,
-                 url: vid
+                 url: vid.url
+                 thumb: vid.thumb
              })
          })
          .catch(e => {
