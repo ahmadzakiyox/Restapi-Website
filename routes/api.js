@@ -139,6 +139,12 @@ loghandler = {
         code: 406,
         message: 'Masukan parameter text2'
     },
+    nottext3: {
+        status: false,
+        creator: `${creator}`,
+        code: 406,
+        message: 'Masukan parameter text3'
+    },
     notnabi: {
         status: false,
         creator: `${creator}`,
@@ -342,6 +348,18 @@ router.get('/removekey', async (req, res, next) => {
 });
 
 router.get('/saygoodbye', async (req, res) => {
+    const apikeyInput = req.query.apikey;
+    const url = req.query.url;
+    const text = req.query.text;
+    const text2 = req.query.text
+    
+    if(!apikeyInput) return res.json(loghandler.notparam)
+	  if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
+    if (!url) return res.json(loghandler.noturl);
+    if (!text) return res.json(loghandler.nottext)
+    if (!text2) return res.json(loghandler.nottext2)
+    if (!text3) return res.json(loghandler.nottext2)
+    
     const canvas = createCanvas(800, 400); // Ukuran canvas 800x400
     const ctx = canvas.getContext('2d');
 
@@ -350,7 +368,7 @@ router.get('/saygoodbye', async (req, res) => {
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
     // Menambahkan gambar profil (bulat)
-    const profileImage = await loadImage('https://telegra.ph/file/939769849b2ac10119575.jpg'); // Ganti dengan URL gambar profil Anda
+    const profileImage = await loadImage(`${url}`); // Ganti dengan URL gambar profil Anda
     const profileSize = 150;
     const profileX = (canvas.width - profileSize) / 2;
     const profileY = 60;
@@ -370,15 +388,15 @@ router.get('/saygoodbye', async (req, res) => {
     ctx.font = 'bold 40px Sans-serif';
     ctx.fillStyle = 'white';
     ctx.textAlign = 'center';
-    ctx.fillText('Zero Two', canvas.width / 2, 240);
+    ctx.fillText(`${text}`, canvas.width / 2, 240);
 
     // Menambahkan deskripsi atau pesan
     ctx.font = '30px Sans-serif';
-    ctx.fillText('Welcome To Pop Cat Community', canvas.width / 2, 290);
+    ctx.fillText(`Welcome To ${text2}`, canvas.width / 2, 290);
 
     // Menambahkan urutan atau nomor anggota
     ctx.font = 'bold 25px Sans-serif';
-    ctx.fillText('Member 219', canvas.width / 2, 330);
+    ctx.fillText(`${text3}`, canvas.width / 2, 330);
 
     res.setHeader('Content-Type', 'image/png');
     canvas.createPNGStream().pipe(res);
