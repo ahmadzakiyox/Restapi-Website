@@ -342,52 +342,54 @@ router.get('/removekey', async (req, res, next) => {
 });
 
 router.get('/saygoodbye', async (req, res) => {
-    // Ukuran Thumbnail
-    const width = 512;
-    const height = 512;
+  try {
+    // Mengatur ukuran canvas
+    const width = 1024;
+    const height = 400;
     const canvas = createCanvas(width, height);
     const ctx = canvas.getContext('2d');
 
     // Background Gradient
     const gradient = ctx.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, '#ff5f6d');
-    gradient.addColorStop(1, '#ffc371');
+    gradient.addColorStop(0, '#FF914D'); // Warna gradasi kiri
+    gradient.addColorStop(1, '#FF1A44'); // Warna gradasi kanan
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
 
-    // Tambahkan Teks
+    // Load gambar profile
+    const profileImagePath = path.join(__dirname, 'profile_image.png');
+    const image = await loadImage(profileImagePath);
+
+    // Profile Picture
+    const profileSize = 150;
+    ctx.drawImage(image, 50, 50, profileSize, profileSize);
+
+    // User Info
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 70px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
-    ctx.shadowOffsetX = 5;
-    ctx.shadowOffsetY = 5;
-    ctx.shadowBlur = 10;
-    ctx.fillText('Ahmad Zaki', width / 2, height / 2 + 20);
+    ctx.font = 'bold 50px Arial';
+    ctx.fillText('Username', 250, 100); // Ganti 'Username' dengan nama user
 
-    // Tambahkan Foto Profil dalam Bentuk Lingkaran
-    const profilePicUrl = 'https://via.placeholder.com/150'; // Ganti dengan URL gambar profil Anda
-    const profilePic = await loadImage(profilePicUrl);
-    const picSize = 200;
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(width / 2, height / 2 - 150, picSize / 2, 0, Math.PI * 2, true);
-    ctx.closePath();
-    ctx.clip();
-    ctx.drawImage(profilePic, (width - picSize) / 2, height / 2 - 250, picSize, picSize);
-    ctx.restore();
+    // Rank & Order
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 40px Arial';
+    ctx.fillText('#000', 900, 50); // Ganti '#000' dengan urutan user
 
-    // Tambahkan Border pada Foto Profil
-    ctx.beginPath();
-    ctx.arc(width / 2, height / 2 - 150, picSize / 2 + 5, 0, Math.PI * 2, true);
-    ctx.strokeStyle = '#FFFFFF';
-    ctx.lineWidth = 10;
-    ctx.stroke();
+    // Say Goodbye Text
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 60px Arial';
+    ctx.fillText('Say Goodbye', 250, 300);
 
-    // Mengembalikan gambar sebagai response
+    // Mengubah canvas menjadi buffer
     const buffer = canvas.toBuffer('image/png');
+
+    // Mengirim buffer sebagai response gambar
     res.set('Content-Type', 'image/png');
     res.send(buffer);
+
+  } catch (error) {
+    console.error('Error generating image:', error);
+    res.status(500).json({ status: false, message: 'Internal Server Error' });
+  }
 });
 
 //=======ARTIFICIAL INTELEGENT=======//
