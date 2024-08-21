@@ -466,7 +466,7 @@ router.get('/wanted', async (req, res) => {
     const ctx = canvas.getContext('2d');
 
     // Memuat template gambar
-    const template = await loadImage('https://telegra.ph/file/b12cd4e81865f32247140.jpg'); // Ganti dengan path yang sesuai
+    const template = await loadImage('/temp/one-piece-wanted-poster-template-a3-300dpi.png'); // Ganti dengan path yang sesuai
     ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
     // Memuat foto profil yang akan ditempatkan di poster
