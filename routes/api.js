@@ -507,8 +507,7 @@ router.get('/download/yt', async (req, res) => {
             thumb: vid.thumb || 'No Thumbnail Available',
             meta: vid.meta,
             video_quality: vid.video_quality,
-            hosting: vid.hosting,
-            hd: vid.hd
+            hosting: vid.hosting
         };
 
         res.json(result);
