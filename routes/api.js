@@ -511,10 +511,8 @@ router.get('/carbon', async (req, res) => {
     };
 
     const imageBuffer = await carbonn(code, options);
-
-    const outputPath = path.join(__dirname, '..', 'public', output);
-    fs.writeFileSync(outputPath, imageBuffer);
-    res.send(`Image saved to ${output}`);
+    res.set('Content-Type', 'image/png');
+    res.send(imageBuffer);
   } catch (error) {
     console.error(error);
     res.status(500).send('An error occurred while generating the carbon image.');
