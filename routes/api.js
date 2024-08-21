@@ -496,8 +496,8 @@ router.get('/wanted', async (req, res) => {
 
 router.get('/carbon', async (req, res) => {
   try {
-    const code = 'print(HelloWorld)';
-    const output = './carbon.png';
+    const code = 'print(\'HelloWorld\')';
+    const output = 'carbon.png';
     const options = {
       lang: req.query.lang || 'auto',
       theme: req.query.theme || 'dracula',
@@ -512,14 +512,9 @@ router.get('/carbon', async (req, res) => {
 
     const imageBuffer = await carbonNowScraper(code, options);
 
-    if (output) {
-      const outputPath = path.join(__dirname, '..', 'public', output);
-      fs.writeFileSync(outputPath, imageBuffer);
-      res.send(`Image saved to ${output}`);
-    } else {
-      res.set('Content-Type', 'image/png');
-      res.send(imageBuffer);
-    }
+    const outputPath = path.join(__dirname, '..', 'public', output);
+    fs.writeFileSync(outputPath, imageBuffer);
+    res.send(`Image saved to ${output}`);
   } catch (error) {
     console.error(error);
     res.status(500).send('An error occurred while generating the carbon image.');
