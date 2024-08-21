@@ -19,6 +19,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const brainly = require('brainly-scraper-v2');
 const imageToBase64 = require('image-to-base64');
 const { createCanvas, loadImage } = require('canvas');
+const carbonn = require('carbon-now-scraper');
 const axios = require('axios');
 const FormData = require('form-data');
 const ytdl = require('ytdl-core');
@@ -528,6 +529,29 @@ function helloWorld() {
     canvas.createPNGStream().pipe(res);
 });
 
+router.get('/carbon', async (req, res) => {
+    try {
+        const carbon = new carbonn();
+        
+        // Konfigurasi untuk carbon-now-scraper
+       const options = {
+            code: `function helloWorld() {
+                   console.log("Hello, world!");}`,
+            theme: 'seti', // Tema yang ingin digunakan
+            window: { width: 1200, height: 800 }, // Ukuran jendela untuk screenshot
+            format: 'png' // Format output
+            };
+       // Mengambil gambar dari carbon-now
+       const imageBuffer = await carbon.getImage(options);
+
+       // Mengirimkan gambar sebagai respons
+       res.setHeader('Content-Type', 'image/png');
+       res.send(imageBuffer);
+   } catch (error) {
+       console.error(error);
+       res.status(500).send('Error generating image');
+   }
+});
 
 //=======ARTIFICIAL INTELEGENT=======//
 router.get('/ai/gpt4', async (req, res, next) => {
