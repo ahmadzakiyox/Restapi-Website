@@ -493,23 +493,17 @@ router.get('/wanted', async (req, res) => {
     canvas.createPNGStream().pipe(res);
 });
 
-const { createCanvas, loadImage } = require('canvas');
-const express = require('express');
-const router = express.Router();
-
 router.get('/carbon', async (req, res) => {
     const width = 1000; // Lebar gambar
     const height = 500; // Tinggi gambar
     const canvas = createCanvas(width, height);
     const ctx = canvas.getContext('2d');
 
-    // Membuat background hitam
-    ctx.fillStyle = '#2d2d2d'; // Warna latar belakang hitam
-    ctx.fillRect(0, 0, width, height);
+    // Memuat tekstur karbon
+    const textureImage = await loadImage('https://telegra.ph/file/d83c9dcfd04a379662a11.jpg');
+    const pattern = ctx.createPattern(textureImage, 'repeat');
 
-    // Menambahkan efek karbon atau pola lain
-    const patternImage = await loadImage('https://telegra.ph/file/d83c9dcfd04a379662a11.jpg'); // Ganti dengan path ke tekstur karbon
-    const pattern = ctx.createPattern(patternImage, 'repeat');
+    // Mengisi latar belakang dengan tekstur karbon
     ctx.fillStyle = pattern;
     ctx.fillRect(0, 0, width, height);
 
@@ -533,8 +527,6 @@ function helloWorld() {
     res.setHeader('Content-Type', 'image/png');
     canvas.createPNGStream().pipe(res);
 });
-
-module.exports = router;
 
 
 //=======ARTIFICIAL INTELEGENT=======//
