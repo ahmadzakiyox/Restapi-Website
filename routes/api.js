@@ -495,41 +495,6 @@ router.get('/wanted', async (req, res) => {
 });
 
 router.get('/carbon', async (req, res) => {
-    const width = 1000; // Lebar gambar
-    const height = 500; // Tinggi gambar
-    const canvas = createCanvas(width, height);
-    const ctx = canvas.getContext('2d');
-
-    // Memuat tekstur karbon
-    const textureImage = await loadImage('https://telegra.ph/file/d83c9dcfd04a379662a11.jpg');
-    const pattern = ctx.createPattern(textureImage, 'repeat');
-
-    // Mengisi latar belakang dengan tekstur karbon
-    ctx.fillStyle = pattern;
-    ctx.fillRect(0, 0, width, height);
-
-    // Menambahkan teks header
-    ctx.font = 'bold 60px Arial';
-    ctx.fillStyle = '#ffffff'; // Warna teks putih
-    ctx.textAlign = 'center';
-    ctx.fillText('Your Code Snippet', width / 2, 80);
-
-    // Menambahkan teks kode
-    ctx.font = '24px Courier New';
-    ctx.fillStyle = '#ffffff'; // Warna teks putih
-    ctx.textAlign = 'left';
-    const codeText = `
-function helloWorld() {
-    console.log("Hello, world!");
-}
-    `;
-    ctx.fillText(codeText, 50, 150);
-
-    res.setHeader('Content-Type', 'image/png');
-    canvas.createPNGStream().pipe(res);
-});
-
-router.get('/carbon', async (req, res) => {
     try {
         const carbon = new carbonn();
         
