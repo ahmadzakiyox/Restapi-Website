@@ -347,7 +347,7 @@ router.get('/removekey', async (req, res, next) => {
     }
 });
 
-router.get('/saygoodbye', async (req, res) => {
+router.get('/welcome', async (req, res) => {
     const apikeyInput = req.query.apikey;
     const url = req.query.url;
     const text = req.query.text;
@@ -394,6 +394,62 @@ router.get('/saygoodbye', async (req, res) => {
     // Menambahkan deskripsi atau pesan
     ctx.font = '30px Sans-serif';
     ctx.fillText(`Welcome To ${text2}`, canvas.width / 2, 290);
+
+    // Menambahkan urutan atau nomor anggota
+    ctx.font = 'bold 25px Sans-serif';
+    ctx.fillText(`${text3}`, canvas.width / 2, 330);
+
+    res.setHeader('Content-Type', 'image/png');
+    canvas.createPNGStream().pipe(res);
+});
+
+router.get('/saygoodbye', async (req, res) => {
+    const apikeyInput = req.query.apikey;
+    const url = req.query.url;
+    const text = req.query.text;
+    const text2 = req.query.text2;
+    const text3 = req.query.text3;
+    
+    if(!apikeyInput) return res.json(loghandler.notparam)
+	  if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
+    if (!url) return res.json(loghandler.noturl);
+    if (!text) return res.json(loghandler.nottext)
+    if (!text2) return res.json(loghandler.nottext2)
+    if (!text3) return res.json(loghandler.nottext2)
+    
+    const canvas = createCanvas(800, 400); // Ukuran canvas 800x400
+    const ctx = canvas.getContext('2d');
+
+    // Memuat background image
+    const background = await loadImage('https://telegra.ph/file/d7527f0f3e8c06c1526be.jpg'); // Ganti dengan path ke gambar .jpg Anda
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+    // Menambahkan gambar profil (bulat)
+    const profileImage = await loadImage(`${url}`); // Ganti dengan URL gambar profil Anda
+    const profileSize = 150;
+    const profileX = (canvas.width - profileSize) / 2;
+    const profileY = 60;
+
+    // Membuat lingkaran untuk masking gambar profil
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(profileX + profileSize / 2, profileY + profileSize / 2, profileSize / 2, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.clip();
+
+    // Menggambar gambar profil ke dalam lingkaran
+    ctx.drawImage(profileImage, profileX, profileY, profileSize, profileSize);
+    ctx.restore();
+
+    // Menambahkan nama pengguna
+    ctx.font = 'bold 40px Sans-serif';
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.fillText(`${text}`, canvas.width / 2, 240);
+
+    // Menambahkan deskripsi atau pesan
+    ctx.font = '30px Sans-serif';
+    ctx.fillText(`Goodbye from ${text2}`, canvas.width / 2, 290);
 
     // Menambahkan urutan atau nomor anggota
     ctx.font = 'bold 25px Sans-serif';
