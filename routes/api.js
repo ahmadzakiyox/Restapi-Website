@@ -342,32 +342,47 @@ router.get('/removekey', async (req, res, next) => {
 });
 
 router.get('/saygoodbye', async (req, res) => {
-
-    // Set ukuran kanvas
-
-    const width = 800;
-    const height = 400;
+    // Ukuran Thumbnail
+    const width = 512;
+    const height = 512;
     const canvas = createCanvas(width, height);
     const ctx = canvas.getContext('2d');
 
-    // Background
-    ctx.fillStyle = '#7289DA'; // Warna latar belakang
+    // Background Gradient
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, '#ff5f6d');
+    gradient.addColorStop(1, '#ffc371');
+    ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
 
-    // Tambahkan teks "Goodbye"
+    // Tambahkan Teks
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 50px sans-serif';
+    ctx.font = 'bold 70px sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('Goodbye, Discord Group!', width / 2, height / 2 - 20);
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+    ctx.shadowOffsetX = 5;
+    ctx.shadowOffsetY = 5;
+    ctx.shadowBlur = 10;
+    ctx.fillText('Ahmad Zaki', width / 2, height / 2 + 20);
 
-    // Tambahkan teks nama user (contoh "Ahmad Zaki")
-    ctx.font = 'bold 40px sans-serif';
-    ctx.fillText('Ahmad Zaki', width / 2, height / 2 + 40);
+    // Tambahkan Foto Profil dalam Bentuk Lingkaran
+    const profilePicUrl = 'https://via.placeholder.com/150'; // Ganti dengan URL gambar profil Anda
+    const profilePic = await loadImage(profilePicUrl);
+    const picSize = 200;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(width / 2, height / 2 - 150, picSize / 2, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.clip();
+    ctx.drawImage(profilePic, (width - picSize) / 2, height / 2 - 250, picSize, picSize);
+    ctx.restore();
 
-    // Tambahkan logo Discord atau gambar lain
-    const imageUrl = 'https://seeklogo.com/images/D/discord-logo-134E148657-seeklogo.com.png'; // URL logo Discord
-    const img = await loadImage(imageUrl);
-    ctx.drawImage(img, width / 2 - 50, height / 2 + 60, 100, 100);
+    // Tambahkan Border pada Foto Profil
+    ctx.beginPath();
+    ctx.arc(width / 2, height / 2 - 150, picSize / 2 + 5, 0, Math.PI * 2, true);
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = 10;
+    ctx.stroke();
 
     // Mengembalikan gambar sebagai response
     const buffer = canvas.toBuffer('image/png');
