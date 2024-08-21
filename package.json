@@ -60,6 +60,7 @@
     "ytdl-core": "^4.4.5",
     "ytpl": "^2.0.5",
     "hercai": "^12.3.2",
+    "@bochilteam/scraper": "^5.0.1",
     "mongoose": "^8.3.1"
   },
   "homepage": "https://github.com/Zhirrr/Zhirrr-Api#readme"
