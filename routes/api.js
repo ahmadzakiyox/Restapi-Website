@@ -547,6 +547,50 @@ router.get('/download/ytmp3', async (req, res) => {
     }
 });
 
+router.get('/download/yts', async (req, res) => {
+    const apikeyInput = req.query.apikey;
+    const query = req.query.query;
+
+    if (!apikeyInput) return res.json({ status: false, message: 'API key is required' });
+    if (apikeyInput !== 'ZakiKey') return res.json({ status: false, message: 'Invalid API key' });
+    if (!query) return res.json({ status: false, message: 'Search query is required' });
+
+    try {
+        const searchResults = await scp.youtubeSearch(query);
+
+        if (searchResults && Array.isArray(searchResults)) {
+            const result = {
+                status: true,
+                creator: "Ahmadzaki",
+                searchResults: searchResults.map(video => ({
+                    videoId: video.videoId,
+                    url: video.url,
+                    title: video.title,
+                    thumbnail: video.thumbnail,
+                    description: video.description,
+                    movingThumbnail: video.movingThumbnail,
+                    channelName: video.channelName,
+                    channelAvatar: video.channelAvatar,
+                    isChannelVerified: video.isChannelVerified,
+                    publishedTime: video.publishedTime,
+                    viewH: video.viewH,
+                    view: video.view,
+                    durationH: video.durationH,
+                    duration: video.duration
+                }))
+            };
+
+            res.json(result);
+        } else {
+            throw new Error('Unexpected structure for search results');
+        }
+
+    } catch (error) {
+        console.error('Error fetching search results:', error);
+        res.json({ status: false, message: 'Error fetching search results', error: error.message });
+    }
+});
+
 router.get('/download/tiktok', async (req, res) => {
     const apikeyInput = req.query.apikey;
     const url = req.query.url;
