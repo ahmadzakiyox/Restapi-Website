@@ -517,7 +517,7 @@ router.get('/download/ytmp4', async (req, res) => {
     }
 });
 
-router.get('/api/download/ytmp3', async (req, res) => {
+router.get('/download/ytmp3', async (req, res) => {
     const apikeyInput = req.query.apikey;
     const url = req.query.url;
 
