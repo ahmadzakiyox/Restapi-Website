@@ -556,7 +556,7 @@ router.get('/download/yts', async (req, res) => {
     if (!query) return res.json({ status: false, message: 'Search query is required' });
 
     try {
-        const searchResults = await scp.youtubeSearch(query);
+        const searchResults = await bch.youtubeSearch(query);
 
         if (searchResults && Array.isArray(searchResults)) {
             const result = {
