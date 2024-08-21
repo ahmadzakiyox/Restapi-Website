@@ -482,7 +482,7 @@ router.get('/download/savefrom', async (req, res) => {
     }
 });
 
-router.get('/download/yt', async (req, res) => {
+router.get('/download/ytmp4', async (req, res) => {
     const apikeyInput = req.query.apikey;
     const url = req.query.url;
 
@@ -514,6 +514,36 @@ router.get('/download/yt', async (req, res) => {
     } catch (error) {
         console.error('Error fetching video:', error);
         res.json(loghandler.invalidLink);
+    }
+});
+
+router.get('/api/download/ytmp3', async (req, res) => {
+    const apikeyInput = req.query.apikey;
+    const url = req.query.url;
+
+    if (!apikeyInput) return res.json({ status: false, message: 'Parameter apikey tidak ditemukan' });
+    if (apikeyInput !== key) return res.json({ status: false, message: 'Invalid API key' });
+    if (!url) return res.json({ status: false, message: 'URL tidak ditemukan' });
+
+    try {
+        const dataArray = await bch.y2mate(url); // Menggunakan scraper untuk YTMP3
+        const audio = dataArray?.audios?.[0] || {}; // Ambil link audio pertama
+
+        const result = {
+            status: true,
+            creator: "Ahmadzaki",
+            title: audio.title,
+            url: audio.url,
+            thumb: audio.thumb,
+            bitrate: audio.bitrate,
+            hosting: audio.hosting,
+            size: audio.size
+        };
+
+        res.json(result);
+    } catch (error) {
+        console.error('Error fetching audio:', error);
+        res.json({ status: false, message: 'Terjadi kesalahan saat mengambil audio' });
     }
 });
 
