@@ -496,16 +496,15 @@ router.get('/download/yt', async (req, res) => {
         // Mengambil elemen pertama dari array jika dataArray bukan kosong
         const vid = dataArray[0] || {};
 
-        // Memastikan vid.url adalah array, jika tidak, inisialisasi sebagai array kosong
+        // Mengambil URL video pertama dari data jika tersedia
         const videoUrl = Array.isArray(vid.url) && vid.url.length > 0 ? vid.url[0].url : 'No video URL available';
 
-        // Menyusun response agar lebih jelas dan terstruktur
+        // Menyusun hasil untuk response
         const result = {
             status: true,
             creator,
             url: videoUrl,
-            thumb: vid.thumb,
-            sd: vid.sd,
+            thumb: vid.thumb || 'No Thumbnail Available',
             meta: vid.meta,
             video_quality: vid.video_quality,
             hosting: vid.hosting,
