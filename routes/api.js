@@ -449,8 +449,8 @@ router.get('/download/savefrom', async (req, res) => {
     const apikeyInput = req.query.apikey;
     const url = req.query.url;
 
-    if (!apikeyInput) return res.json(loghandler.notparam);
-    if (apikeyInput !== key) return res.json({ status: false, message: 'Invalid API key' });
+    if(!apikeyInput) return res.json(loghandler.notparam)
+	  if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
     if (!url) return res.json(loghandler.noturl);
 
     try {
@@ -486,8 +486,8 @@ router.get('/download/ytmp4', async (req, res) => {
     const apikeyInput = req.query.apikey;
     const url = req.query.url;
 
-    if (!apikeyInput) return res.json(loghandler.notparam);
-    if (apikeyInput !== key) return res.json({ status: false, message: 'Invalid API key' });
+    if(!apikeyInput) return res.json(loghandler.notparam)
+	  if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
     if (!url) return res.json(loghandler.noturl);
 
     try {
@@ -521,8 +521,8 @@ router.get('/download/ytmp3', async (req, res) => {
     const apikeyInput = req.query.apikey;
     const url = req.query.url;
 
-    if (!apikeyInput) return res.json({ status: false, message: 'Parameter apikey tidak ditemukan' });
-    if (apikeyInput !== key) return res.json({ status: false, message: 'Invalid API key' });
+    if(!apikeyInput) return res.json(loghandler.notparam)
+	  if(apikeyInput !== `${key}`) return res.sendFile(invalidKey)
     if (!url) return res.json({ status: false, message: 'URL tidak ditemukan' });
 
     try {
