@@ -498,18 +498,24 @@ router.get('/carbon', async (req, res) => {
   try {
     const code = 'print(\'HelloWorld\')';
     const options = {
-      lang: req.query.lang || 'auto',
-      theme: req.query.theme || 'dracula',
-      background: req.query.background || 'rgba(171, 184, 195, 1)',
-      font: req.query.font || 'Hack',
-      'window-controls': typeof req.query['window-controls'] !== 'undefined' ? req.query['window-controls'] === 'true' : true,
-      'width-adjustment': typeof req.query['width-adjustment'] !== 'undefined' ? req.query['width-adjustment'] === 'true' : true,
-      line: typeof req.query.line !== 'undefined' ? req.query.line === 'true' : true,
-      'first-line': typeof req.query['first-line'] !== 'undefined' ? parseInt(req.query['first-line']) : 0,
-      watermark: typeof req.query.watermark !== 'undefined' ? req.query.watermark === 'true' : true
+      lang: 'auto',
+      theme: 'dracula',
+      background: 'rgba(171, 184, 195, 1)',
+      font: 'Hack',
+      windowControls: true,
+      widthAdjustment: true,
+      line: true,
+      firstLine: 0,
+      watermark: true
     };
 
+    console.log('Code:', code);
+    console.log('Options:', options);
+
     const imageBuffer = await carbonn(code, options);
+
+    console.log('Image buffer:', imageBuffer);
+
     res.set('Content-Type', 'image/png');
     res.send(imageBuffer);
   } catch (error) {
