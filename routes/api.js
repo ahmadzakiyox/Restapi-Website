@@ -520,6 +520,41 @@ router.get('/carbon', async (req, res) => {
   }
 });
 
+router.get('/triger', async (req, res) => {
+    const width = 800;
+    const height = 800;
+    const canvas = createCanvas(width, height);
+    const ctx = canvas.getContext('2d');
+
+    try {
+        // Memuat gambar profil atau gambar utama
+        const profileImage = await loadImage('https://telegra.ph/file/a89861df69e7411df644b.jpg'); // Ganti dengan URL yang sesuai
+        ctx.drawImage(profileImage, 0, 0, width, height);
+
+        // Menambahkan overlay warna merah dengan opacity
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+        ctx.fillRect(0, 0, width, height);
+
+        // Menambahkan teks "TRIGGERED"
+        ctx.font = 'bold 70px Arial';
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('TRIGGERED', width / 2, height - 50);
+
+        // Menggeser gambar ke kanan secara horizontal dan mengulang bagian kiri
+        const shift = 20;
+        ctx.drawImage(canvas, shift, 0, width - shift, height, 0, 0, width - shift, height);
+        ctx.drawImage(canvas, width - shift, 0, shift, height, 0, 0, shift, height);
+
+        // Mengirim gambar sebagai respons
+        res.setHeader('Content-Type', 'image/png');
+        canvas.createPNGStream().pipe(res);
+    } catch (error) {
+        res.status(500).send('Terjadi kesalahan saat membuat gambar');
+    }
+});
+
 //=======ARTIFICIAL INTELEGENT=======//
 router.get('/ai/gpt4', async (req, res, next) => {
     var apikeyInput = req.query.apikey,
