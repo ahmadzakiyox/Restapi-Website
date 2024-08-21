@@ -460,16 +460,13 @@ router.get('/download/savefrom', async (req, res) => {
         const vid = dataArray[0] || {};
 
         // Memastikan vid.url adalah array, jika tidak, inisialisasi sebagai array kosong
-        const videoUrls = Array.isArray(vid.url) ? vid.url.map(link => ({
-            quality: link.quality, // Tampilkan kualitas video
-            link: link.url         // Tampilkan URL video
-        })) : [];
+        const videoUrl = Array.isArray(vid.url) && vid.url.length > 0 ? vid.url[0].url : 'No video URL available';
 
         // Menyusun response agar lebih jelas dan terstruktur
         const result = {
             status: true,
             creator,
-            url: videoUrls,
+            url: videoUrl,
             thumb: vid.thumb,
             sd: vid.sd,
             meta: vid.meta,
