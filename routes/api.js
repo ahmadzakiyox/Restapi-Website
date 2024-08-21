@@ -345,17 +345,26 @@ router.get('/saygoodbye', async (req, res) => {
     const canvas = createCanvas(800, 400); // Ukuran canvas 800x400
     const ctx = canvas.getContext('2d');
 
-    // Mengisi background dengan warna gradasi
-    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, '#1e3c72');
-    gradient.addColorStop(1, '#2a5298');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Memuat background image
+    const background = await loadImage('https://telegra.ph/file/939769849b2ac10119575.jpg'); // Ganti dengan path ke gambar .jpg Anda
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
-    // Menambahkan gambar profil (ikon Discord)
+    // Menambahkan gambar profil (bulat)
     const profileImage = await loadImage('https://telegra.ph/file/939769849b2ac10119575.jpg'); // Ganti dengan URL gambar profil Anda
     const profileSize = 150;
-    ctx.drawImage(profileImage, (canvas.width - profileSize) / 2, 40, profileSize, profileSize);
+    const profileX = (canvas.width - profileSize) / 2;
+    const profileY = 60;
+
+    // Membuat lingkaran untuk masking gambar profil
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(profileX + profileSize / 2, profileY + profileSize / 2, profileSize / 2, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.clip();
+
+    // Menggambar gambar profil ke dalam lingkaran
+    ctx.drawImage(profileImage, profileX, profileY, profileSize, profileSize);
+    ctx.restore();
 
     // Menambahkan nama pengguna
     ctx.font = 'bold 40px Sans-serif';
