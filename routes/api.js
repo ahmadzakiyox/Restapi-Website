@@ -365,7 +365,7 @@ router.get('/saygoodbye', async (req, res) => {
     const ctx = canvas.getContext('2d');
 
     // Memuat background image
-    const background = await loadImage('https://telegra.ph/file/939769849b2ac10119575.jpg'); // Ganti dengan path ke gambar .jpg Anda
+    const background = await loadImage('https://telegra.ph/file/139e8dfe3f83becb78ec1.jpg'); // Ganti dengan path ke gambar .jpg Anda
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
     // Menambahkan gambar profil (bulat)
