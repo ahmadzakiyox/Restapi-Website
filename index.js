@@ -7,7 +7,6 @@ var { color } = require('./lib/color.js')
 var mainrouter = require('./routes/main'),
     apirouter = require('./routes/api')
 
-const fs = require('fs');
 const mongoose = require('mongoose');
 // Koneksi ke MongoDB
 mongoose.connect('mongodb+srv://murafulan:lelang18@cluster0.qblcl.mongodb.net/visitor-count?retryWrites=true&w=majority&appName=Cluster0', {
@@ -28,25 +27,23 @@ app.use(cors())
 app.use(secure)
 app.use(express.static("public"))
 
-app.get('/count', (req, res) => {
-    fs.readFile(countFile, 'utf8', (err, data) => {
-      if (err) {
-        return res.status(500).send('Error reading count file.');
-      }
-  
-      let count = parseInt(data, 10);
-      if (isNaN(count)) count = 0;
-  
-      count += 1;
-  
-      fs.writeFile(countFile, count.toString(), (err) => {
-        if (err) {
-          return res.status(500).send('Error updating count file.');
-        }
-        res.json({ count });
-      });
-    });
-  });
+// Endpoint untuk mendapatkan dan meningkatkan count
+app.get('/count', async (req, res) => {
+  try {
+    let countDoc = await Count.findOne();
+    if (!countDoc) {
+      countDoc = new Count({ count: 0 });
+      await countDoc.save();
+    }
+
+    countDoc.count += 1;
+    await countDoc.save();
+
+    res.json({ count: countDoc.count });
+  } catch (err) {
+    res.status(500).send('Error accessing database.');
+  }
+});
 app.use('/', mainrouter)
 app.use('/api', apirouter)
 
