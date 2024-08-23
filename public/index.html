@@ -722,11 +722,11 @@
               <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="font-weight-bold text-success text-uppercase">HIT</h5>
+                    <h5 class="font-weight-bold text-success text-uppercase">Visitor</h5>
                     <div class="row">
                       <div class="col-9">
                         <div class="d-flex align-items-center align-self-start">
-                          <h3 class="mb-0" id="hitcount">Waiting...</h3>
+                          <h3 class="mb-0" id="visitCount">Waiting...</h3>
                         </div>
                       </div>
                       <div class="col-3">
@@ -872,25 +872,16 @@
     <script src="js/dashboard.js"></script>
     <script src="js/ojan.js"></script>
     <script>
-      // Fungsi untuk mendapatkan jumlah request API
-      async function updateVisitCount() {
-        try {
-          // Ganti URL_API dengan URL endpoint API yang kamu gunakan
-          const response = await fetch('https://botpyz-92685f78407d.herokuapp.com/api/');
-          const data = await response.json();
-      
-          // Misalnya, jika jumlah request terdapat dalam properti 'total_requests'
-          const visitCount = data.total_requests;
-      
-          // Perbarui elemen HTML dengan ID 'visits'
-          document.getElementById('hitcount').innerText = visitCount;
-        } catch (error) {
-          console.error('Error fetching visit count:', error);
-          document.getElementById('hitcount').innerText = 'Error';
-        }
-      }
-      
-      // Panggil fungsi saat halaman dimuat
-      window.onload = updateVisitCount;
-     </script>
+   // script.js
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/count')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('visitCount').textContent = data.count;
+        })
+        .catch(error => {
+            console.error('Error fetching visit count:', error);
+        });
+});
+    </script>
 </html>
